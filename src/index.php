@@ -27,7 +27,5 @@ spl_autoload_register(function (string $class) {
 });
 
 $router = new Router();
-$db = new Database();
+$router->run();
 ?>
-
-<h1>HELLO</h1>

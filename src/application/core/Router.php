@@ -36,7 +36,7 @@ class Router
     public function run(): void
     {
         if (!$this->match())
-            View::throwError(404);
+            View::throwError(500);
 
         extract($this->params);
         $controller_class = 'application\controllers\\' . ucfirst($controller) . "Controller";

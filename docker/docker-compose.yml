@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: mysql:latest
-    container_name: db
+    container_name: ${MYSQL_SERVER}
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}

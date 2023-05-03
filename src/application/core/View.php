@@ -11,7 +11,7 @@ class View
 	public function __construct($route)
 	{
 		$this->route = $route;
-		$this->path = $route['controller'] . '/' . $route['action'];
+		$this->path = "{$route['controller']}/{$route['action']}";
 	}
 
 	public function render($title, $vars = [])
@@ -30,12 +30,13 @@ class View
 		 */
 
 		extract($vars);
+		$file_path = "application/views/{$this->path}.php";
 
-		if (file_exists('application/views/' . "{$this->path}.php")) {
+		if (file_exists($file_path)) {
 			ob_start();
-			require 'application/views/' . "{$this->path}.php";
+			require $file_path;
 			$content = ob_get_clean();
-			require 'application/views/layouts/' . $this->layout . '.php';
+			require "application/views/layouts/{$this->layout}.php";
 		} else {
 			echo "<pre>ERROR: View {$this->path} is not found.</pre>";
 		}
@@ -43,7 +44,7 @@ class View
 
 	public static function throwError($code)
 	{
-		$file_path = 'application/views/errors/' . "$code.php";
+		$file_path = "application/views/errors/$code.php";
 
 		http_response_code($code);
 

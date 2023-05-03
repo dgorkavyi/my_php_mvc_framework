@@ -42,7 +42,7 @@ class View
 		}
 	}
 
-	public static function throwError($code)
+	public static function throwError($code): void
 	{
 		$file_path = "application/views/errors/$code.php";
 
@@ -54,9 +54,14 @@ class View
 
 		exit;
 	}
-	public function redirect(string $url)
+	public function redirect(string $url): void
 	{
 		header("Location: $url");
 		exit;
+	}
+
+	public function message(int $status, string $message): void
+	{
+		
 	}
 }

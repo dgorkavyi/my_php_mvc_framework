@@ -8,6 +8,10 @@ class AccountController extends Controller
 {
     public function loginAction(): void
     {
+        if (!empty($_POST)) {
+            exit(json_encode(["status" => "success", "message" => 123]));
+        }
+
         $vars = [];
         $this->view->render("Login", $vars);
     }

@@ -8,7 +8,7 @@ class NewsController extends Controller
 {
     public function showAction(): void
     {
-        $vars = [];
-        $this->view->render('News', $vars);
+        $news = $this->model->getNews();
+        $this->view->render('News', ['news' => $news]);
     }
 }

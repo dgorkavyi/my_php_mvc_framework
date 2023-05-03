@@ -2,20 +2,25 @@
 
 namespace application\core;
 
+use application\core\View;
+
 class Router
 {
     protected array $routes = [];
     protected array $params = [];
+
     function __construct()
     {
         foreach ((require 'application/config/routes.php') as $route => $params) {
             $this->add($route, $params);
         }
     }
+
     public function add(string $route, array $params): void
     {
         $this->routes["#^$route$#"] = $params;
     }
+
     public function match(): bool
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
@@ -27,29 +32,23 @@ class Router
         }
         return false;
     }
+
     public function run(): void
     {
-        if (!$this->match()) {
-            echo "<h1>ERROR 404</h1>";
-            echo "<pre><hr><b>{$_SERVER['REQUEST_URI']}</b><hr> DOES NOT EXIST.</pre>";
-            return;
-        }
+        if (!$this->match())
+            View::throwError(404);
 
         extract($this->params);
         $controller_class = 'application\controllers\\' . ucfirst($controller) . "Controller";
 
-        if (!class_exists($controller_class)) {
-            echo "<h1>ERROR</h1>";
-            echo "<pre>CLASS<hr><b>$controller_class</b><hr>DOES NOT EXIST.</pre>";
-            return;
-        }
 
         $action_class = $action . 'Action';
 
-        if (!method_exists($controller_class, $action_class)) {
-            echo "<h1>ERROR</h1>";
-            echo "<pre>CLASS<hr><b>$action_class</b><hr>DOES NOT EXIST.</pre>";
-            return;
+        if (
+            !class_exists($controller_class)
+            && !method_exists($controller_class, $action_class)
+        ) {
+            View::throwError(404);
         }
 
         $controller = new $controller_class($this->params);

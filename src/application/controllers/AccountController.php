@@ -8,11 +8,13 @@ class AccountController extends Controller
 {
     public function loginAction(): void
     {
-        echo '<p>Login Page</p>';
+        $vars = [];
+        $this->view->render("Login", $vars);
     }
 
     public function registerAction(): void
     {
-        echo '<p>Registration Page</p>';
+        $vars = [];
+        $this->view->render("Register", $vars);
     }
 }

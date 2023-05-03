@@ -8,6 +8,7 @@ class MainController extends Controller
 {
     public function indexAction(): void
     {
-        echo '<p>Index Page</p>';
+        $vars = [];
+        $this->view->render('Main', $vars);
     }
 }

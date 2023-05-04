@@ -62,6 +62,9 @@ class View
 
 	public function message(int $status, string $message): void
 	{
-		
+		exit(json_encode(["status" => $status, "message" => $message]));
 	}
+	public function location(string $url): void {
+		exit(json_encode(["url" => $url]));
+	} 
 }
